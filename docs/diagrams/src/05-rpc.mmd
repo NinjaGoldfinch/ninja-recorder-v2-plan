@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant U as UI client
+    participant D as Daemon server
+    U->>D: {"id":1,"method":"hello","params":{"protocol":1,"app":"1.1.0","build":"release"}}
+    alt version/build mismatch
+        D-->>U: {"id":1,"error":{"code":-32001,"message":"version skew"}}
+        Note over U: show "restart required", never tell daemon to quit
+    else ok
+        D-->>U: {"id":1,"result":{"app":"1.1.0","snapshot":{...full state...}}}
+    end
+    U->>D: {"id":2,"method":"subscribe","params":{"topics":["recording","lcu","library"]}}
+    D-->>U: {"id":2,"result":true}
+    par concurrent requests, per-request ids
+        U->>D: {"id":3,"method":"extract_audio_track", ...}   (slow)
+        U->>D: {"id":4,"method":"game_state_status"}          (fast)
+        D-->>U: {"id":4,"result":{...}}
+        D-->>U: {"id":3,"result":"...path"}
+    end
+    D-->>U: {"method":"event","params":{"type":"recording.started","seq":812,...}}
+    D-->>U: {"method":"event","params":{"type":"marker.added","seq":813,...}}
+    Note over U,D: pipe closes → client backoff 250ms…5s → hello → snapshot → subscribe

@@ -1,0 +1,41 @@
+flowchart LR
+    subgraph League["League (external)"]
+        direction TB
+        LCU["LCU API"]
+        LIVE["Live Client Data"]
+    end
+    subgraph D["ninja-recorder.exe --daemon — plain Win32 process, no WebView2"]
+        direction TB
+        SUP["Supervisor + StateMachine"]
+        REC["Recorder trait → capture backend<br/><small>trimmed libobs | WGC→D3D11→MF</small>"]
+        DBW["db::Db writer<br/><small>schema, migrations, all writes</small>"]
+        EVT["Event bus<br/><small>generated Event enum</small>"]
+        RPC["JSON-RPC server<br/><small>named pipe</small>"]
+        PUMP["Win32 pump: tray · autostart · updater"]
+        SUP --> REC
+        SUP --> DBW
+        SUP --> EVT
+        EVT --> RPC
+    end
+    subgraph U["ninja-recorder.exe — Tauri UI, disposable"]
+        direction TB
+        CLI["Generated TS client<br/><small>PipeTransport | InvokeTransport</small>"]
+        SV["Svelte 5 app<br/><small>library · settings · review island</small>"]
+        DBR["SQLite reader<br/><small>query_only = ON</small>"]
+        CLI --> SV
+        DBR --> SV
+    end
+    subgraph Disk["Disk"]
+        direction TB
+        MP4[("recordings/*.mp4")]
+        SQL[("library.sqlite — WAL")]
+    end
+    LCU --> SUP
+    LIVE --> SUP
+    RPC <-->|"requests · notifications"| CLI
+    REC --> MP4
+    DBW --> SQL
+    SQL --> DBR
+    MP4 -->|"asset protocol"| SV
+    style D fill:#e8f5e9,stroke:#2e7d32
+    style U fill:#e3f2fd,stroke:#1565c0

@@ -1,0 +1,19 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> ClientRunning: LockfileChanged(present)
+    ClientRunning --> Idle: LockfileChanged(absent)
+    ClientRunning --> WaitingForGame: GameflowPhase(InProgress)
+    WaitingForGame --> Recording: LiveClientUp
+    WaitingForGame --> ClientRunning: GameflowPhase(other)
+    Recording --> Finalizing: GameflowPhase(EndOfGame) / LiveClientDown
+    Finalizing --> ClientRunning: FinalizeComplete
+    note right of ClientRunning
+        v2: daemon emits Event::StateChanged
+        on every transition; UI receives it
+        as a notification, or in the snapshot
+        on connect.
+    end note
+    note right of Recording
+        prepare() on entering ClientRunning,
+        release() on leaving — unchanged.
+    end note

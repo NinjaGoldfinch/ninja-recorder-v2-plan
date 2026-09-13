@@ -1,0 +1,35 @@
+flowchart TB
+    subgraph League["League of Legends (external)"]
+        LCU["LCU API<br/>lockfile · HTTPS · WebSocket"]
+        LIVE["Live Client Data<br/>127.0.0.1:2999 @ 1 Hz"]
+    end
+    subgraph App["ninja-recorder.exe — one Tauri v2 process (v1)"]
+        subgraph Core["Rust core (24,822 LOC, 447 tests)"]
+            SUP["state_machine::Supervisor"]
+            SM["StateMachine<br/><small>pure transitions</small>"]
+            REC["Recorder trait"]
+            DB["db::Db<br/><small>single Mutex&lt;Connection&gt;</small>"]
+            DISP["core::dispatch<br/><small>29 commands, hand-rolled table</small>"]
+        end
+        UI["WebView2 frontend<br/><small>vanilla TS, 12,797 LOC, 0 tests</small>"]
+        TRAY["Tray · autostart · updater"]
+    end
+    WORKER["extprocess_recorder.exe<br/><small>libobs worker (fork, ~200 MB)</small>"]
+    FF["ffmpeg.exe<br/><small>faststart remux, stem extract</small>"]
+    MP4[("recordings/*.mp4")]
+    SQL[("library.sqlite")]
+    LCU --> SUP
+    LIVE --> SUP
+    SUP <--> SM
+    SUP --> REC
+    SUP --> DB
+    REC --> WORKER
+    REC --> FF
+    WORKER --> MP4
+    DB --> SQL
+    UI <-->|"invoke('rpc')"| DISP
+    DISP --> Core
+    MP4 -->|asset protocol| UI
+    style UI fill:#fff3e0,stroke:#ef6c00
+    style WORKER fill:#fce4ec,stroke:#c62828
+    style DB fill:#fff3e0,stroke:#ef6c00

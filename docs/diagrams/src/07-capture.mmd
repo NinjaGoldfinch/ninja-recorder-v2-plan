@@ -1,0 +1,20 @@
+flowchart TB
+    START["P0: run all three arms in parallel"] --> C["P0c  Own-backend spike — the gate<br/><small>stage 1: process loopback (2 d) · stage 2: WGC+MF SinkWriter (2 wk)</small>"]
+    START --> A["P0a  A-trim — fallback<br/><small>strip libobs plugins, measure (~1 day)</small>"]
+    START --> B["P0b  libobs in daemon<br/><small>kill UI mid-record (~2 days)</small>"]
+    C --> S1{"stage 1: isolated<br/>game audio?"}
+    S1 -->|no| PROD["Product decision:<br/>licence goal vs per-app audio"]
+    PROD -->|"keep audio"| KEEP["v2.0 ships trimmed libobs only<br/><small>GPL-2.0 stays · retry B later</small>"]
+    PROD -->|"take the licence"| OWN
+    S1 -->|yes| S2{"stage 2: 10-min sample,<br/>no drift, kill-safe?"}
+    S2 -->|"yes"| OWN["P1: build Option B — default backend<br/><small>libobs selectable one release · v2.0 still GPL</small>"]
+    S2 -->|"only encoder quality poor"| B2["B2: vendor SDKs from the start<br/><small>NVENC / AMF / oneVPL</small>"] --> OWN
+    S2 -->|"drift or crash-safety fails"| KEEP
+    A --> OWN
+    B --> OWN
+    OWN --> REL["WS8 / v2.1: delete libobs, audit, relicense"]
+    style OWN fill:#e3f2fd,stroke:#1565c0
+    style REL fill:#e3f2fd,stroke:#1565c0
+    style KEEP fill:#e8f5e9,stroke:#2e7d32
+    style B2 fill:#fff3e0,stroke:#ef6c00
+    style PROD fill:#fce4ec,stroke:#c62828

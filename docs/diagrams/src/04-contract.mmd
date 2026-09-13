@@ -1,0 +1,12 @@
+flowchart LR
+    DECL["contract/ (Rust)<br/><small>#[command] fns + #[derive(Event)] enum</small>"]
+    DECL -->|"proc macro"| DISPATCH["dispatch()<br/><small>typed args, camelCase</small>"]
+    DECL -->|"proc macro"| NAMES["command_names() · event_names()"]
+    DECL -->|"cargo run --bin gen-contract"| TS["src/lib/contract/<br/><small>types.ts · client.ts · events.ts</small>"]
+    TS --> INV["InvokeTransport<br/><small>Tauri invoke('rpc')</small>"]
+    TS --> PIPE["PipeTransport<br/><small>JSON-RPC over named pipe</small>"]
+    INV --> DISPATCH
+    PIPE --> RPCS["daemon rpc server"] --> DISPATCH
+    CI["CI: gen-contract --check<br/><small>fails if src/lib/contract is stale</small>"] -.-> TS
+    style DECL fill:#ede7f6,stroke:#5e35b1
+    style TS fill:#e3f2fd,stroke:#1565c0

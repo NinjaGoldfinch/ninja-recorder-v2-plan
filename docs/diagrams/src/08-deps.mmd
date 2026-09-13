@@ -1,0 +1,17 @@
+flowchart LR
+    WS0["WS0  Baseline & measurement"] --> WS5
+    WS0 --> WS1
+    WS1["WS1  Capture P0 arms"] --> WS1b["WS1b  Capture build (P1)"]
+    WS5["WS5  Toolchain & gates<br/><small>pin, edition 2024, Biome, Vitest, cargo-deny</small>"]
+    WS2["WS2  Generated contract<br/><small>commands + events + TS client</small>"] --> WS3
+    WS2 --> WS4
+    WS6["WS6  SQLite WAL & ownership"] --> WS3
+    WS3["WS3  Daemon / UI split<br/><small>pipe transport, resync, tray, updater</small>"] --> WS7
+    WS4["WS4  Svelte strangler<br/><small>library → settings → player</small>"] --> WS7
+    WS1b --> WS7["WS7  Measure & ship v2.0.0<br/><small>Option B default, libobs fallback, GPL</small>"]
+    WS7 --> WS8["WS8  Delete libobs, audit, relicense<br/><small>v2.1.0 after one release in the field</small>"]
+    WS3 -.->|"libobs lives here"| WS1b
+    style WS1 fill:#fff3e0,stroke:#ef6c00
+    style WS2 fill:#ede7f6,stroke:#5e35b1
+    style WS7 fill:#e8f5e9,stroke:#2e7d32
+    style WS8 fill:#e3f2fd,stroke:#1565c0

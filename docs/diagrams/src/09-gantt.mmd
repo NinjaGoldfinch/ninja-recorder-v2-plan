@@ -1,0 +1,36 @@
+gantt
+    title Indicative sequencing — one part-time maintainer (weeks from 21 Sep 2026)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d %b
+    section WS0 Baseline
+    Measure v1 install + idle RAM (Private Bytes)     :ws0, 2026-09-21, 4d
+    section WS5 Gates
+    rust-toolchain.toml + edition 2024 + cargo deny    :ws5a, 2026-09-21, 7d
+    Biome + Vitest on pure TS modules                   :ws5b, after ws5a, 7d
+    section WS1 Capture
+    P0a trim libobs bundle                             :ws1a, 2026-09-25, 3d
+    P0b libobs in daemon, kill UI                       :ws1b, after ws1a, 4d
+    P0c stage 1 loopback (go/no-go)                     :crit, ws1c, 2026-09-28, 3d
+    P0c stage 2 WGC+MF SinkWriter                       :crit, ws1d, after ws1c, 14d
+    Gate — Option B go                                  :milestone, m1, after ws1d, 0d
+    P1 build Option B + libobs fallback switch          :crit, ws1e, after m1, 28d
+    section WS2 Contract
+    Event enum + subscription + snapshot                :ws2a, 2026-10-05, 7d
+    gen-contract + typed TS client + transports         :ws2b, after ws2a, 10d
+    Delete drift test                                   :milestone, m2, after ws2b, 0d
+    section WS6 SQLite
+    WAL, busy_timeout, writer + reader pool             :ws6, 2026-10-12, 5d
+    section WS3 Daemon
+    Pipe server, hello/resync, reconnect                :ws3a, after m2, 10d
+    Tray/autostart/updater move to daemon               :ws3b, after ws3a, 7d
+    UI killed mid-recording survives                    :milestone, m3, after ws3b, 0d
+    section WS4 Frontend
+    Svelte scaffold, tokens, mount() strangler          :ws4a, after m2, 5d
+    Library panel                                       :ws4b, after ws4a, 10d
+    Settings + update panel                             :ws4c, after ws4b, 7d
+    Review player island                                :ws4d, after ws4c, 14d
+    section WS7 Ship
+    Measure install + RAM, release v2.0.0 (GPL)         :ws7, after ws4d, 5d
+    section WS8 Relicense
+    One release cycle in the field                      :ws8a, after ws7, 21d
+    Delete libobs, audits, relicense, v2.1.0            :ws8b, after ws8a, 10d

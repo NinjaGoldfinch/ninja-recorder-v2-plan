@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant OS as Windows login
+    participant D as Daemon (--daemon)
+    participant U as UI (Tauri)
+    participant L as League
+    OS->>D: Run key starts ninja-recorder.exe --daemon
+    D->>D: acquire single-instance mutex, open DB (writer), create pipe
+    D->>D: tray icon, autostart, update check
+    U->>D: connect pipe · hello{version, build_id}
+    D-->>U: ok{version} · state snapshot (resync)
+    U->>D: subscribe([recording, lcu, library, update])
+    L->>D: lockfile appears → ClientRunning (prepare backend)
+    D-->>U: notify lcu.phase
+    L->>D: gameflow InProgress → Recording
+    D-->>U: notify recording.started
+    Note over U: user closes UI → process exits
+    L->>D: markers at 1 Hz, game ends → Finalizing
+    D->>D: stop, remux, write row, deferred LCU patch
+    U->>D: UI relaunched → hello → snapshot → subscribe
+    D-->>U: library.changed
+    Note over D: daemon restarts (update) — UI reconnects with backoff, resyncs

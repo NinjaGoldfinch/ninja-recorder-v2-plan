@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph Daemon
+        W["writer connection<br/><small>migrations · every INSERT/UPDATE/DELETE</small>"]
+        RP["reader pool (2–3)<br/><small>status polls, retention preview</small>"]
+    end
+    subgraph UI
+        Q["query_only=ON connection<br/><small>library list, filters, markers, samples</small>"]
+    end
+    F[("library.sqlite<br/>journal_mode=WAL<br/>synchronous=NORMAL<br/>busy_timeout=5000<br/>foreign_keys=ON")]
+    W --> F
+    RP --> F
+    Q --> F
+    W -.->|"library.changed event"| UI
+    style W fill:#e8f5e9,stroke:#2e7d32
+    style Q fill:#e3f2fd,stroke:#1565c0
