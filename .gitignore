@@ -1,0 +1,13 @@
+# Rendered output that is not committed
+*.pdf
+
+# Tooling
+node_modules/
+
+# OS and editor droppings
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Word lock files
+~$*.docx
