@@ -69,7 +69,7 @@ the re-rendered PNG together — CI checks that every source has a matching PNG.
 
 `type(scope): imperative summary` — lower case, no trailing full stop.
 
-```
+```text
 docs(workstreams): record P0c stage 1 outcome in ws1
 docs(decisions): add ADR 0004 for the target licence
 chore(ci): allow inline html in markdownlint

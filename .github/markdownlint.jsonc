@@ -1,0 +1,47 @@
+// markdownlint-cli2 configuration for the docs workflow.
+//
+// The two source documents under docs/design/ and docs/implementation/ are frozen
+// (see CLAUDE.md): their wording cannot be changed to satisfy a linter. Rules that
+// would fire on their prose or on converted-from-Word structure are disabled here
+// rather than worked around in the documents.
+{
+  "config": {
+    "default": true,
+
+    // Long prose lines and wide tables are deliberate.
+    "MD013": false,
+
+    // Inline HTML is used for the <details> render blocks and <small> in diagrams.
+    "MD033": false,
+
+    // The source documents use --- as a section separator between headings.
+    "MD022": false,
+
+    // Duplicate headings occur across sibling sections of the plan.
+    "MD024": { "siblings_only": true },
+
+    // The converted documents lead with a title table, not prose.
+    "MD041": false,
+
+    // Bare URLs appear inside the plan's command examples.
+    "MD034": false,
+
+    // Emphasis-as-heading is used for figure captions (*Figure 1 — ...*).
+    "MD036": false,
+
+    // Trailing punctuation in headings occurs in the plan's section titles.
+    "MD026": false,
+
+    // The source documents use the compact |---|---| delimiter row throughout.
+    "MD060": false,
+
+    // The implementation plan has an unlabelled fence in its frozen wording.
+    "MD040": false,
+
+    // The <details> render links are deliberately bare: the Mermaid block directly
+    // below each one carries the figure caption and the accessible description.
+    "MD045": false
+  },
+  "globs": ["docs/**/*.md", "README.md", "CLAUDE.md"],
+  "ignores": ["node_modules/**"]
+}

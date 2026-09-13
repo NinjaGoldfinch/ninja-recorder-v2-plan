@@ -1,0 +1,92 @@
+name: docs
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Lint markdown
+        run: npx --yes markdownlint-cli2@0.23.2 --config .github/markdownlint.jsonc
+
+  diagrams:
+    name: every mermaid source has a rendered png
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check src/*.mmd against png/
+        run: |
+          set -euo pipefail
+          missing=0
+          shopt -s nullglob
+          sources=(docs/diagrams/src/*.mmd)
+          if [ ${#sources[@]} -eq 0 ]; then
+            echo "::error::no .mmd sources found under docs/diagrams/src/"
+            exit 1
+          fi
+          for src in "${sources[@]}"; do
+            name=$(basename "$src" .mmd)
+            if [ ! -f "docs/diagrams/png/$name.png" ]; then
+              echo "::error file=$src::no rendered png — run scripts/render-diagrams.sh and commit docs/diagrams/png/$name.png"
+              missing=1
+            fi
+          done
+          # An orphaned png means a source was deleted without its render.
+          for png in docs/diagrams/png/*.png; do
+            name=$(basename "$png" .png)
+            if [ ! -f "docs/diagrams/src/$name.mmd" ]; then
+              echo "::error file=$png::no matching source at docs/diagrams/src/$name.mmd"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+          echo "${#sources[@]} diagram(s), each with a matching png"
+
+  frozen:
+    name: source documents are frozen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refuse changes to anything but the .md conversions
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # The .md conversions may be corrected structurally. Everything else under
+          # docs/design/ and docs/implementation/ — the .docx originals and the
+          # extracted figures — is frozen. See CLAUDE.md.
+          allowed='^docs/(design/v2-design\.md|implementation/v2-implementation-plan\.md)$'
+          changed=$(git diff --name-only "$BASE" "$HEAD" -- docs/design docs/implementation || true)
+          violations=0
+          for f in $changed; do
+            if ! echo "$f" | grep -Eq "$allowed"; then
+              echo "::error file=$f::frozen source document changed — the .docx originals and extracted figures must not be modified"
+              violations=1
+            fi
+          done
+          if [ "$violations" -ne 0 ]; then
+            echo
+            echo "Only docs/design/v2-design.md and docs/implementation/v2-implementation-plan.md"
+            echo "may change, and only structurally. Wording changes need an ADR — see CLAUDE.md."
+            exit 1
+          fi
+          echo "frozen originals untouched"
