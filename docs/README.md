@@ -13,6 +13,16 @@ These two are the inputs. Their wording is frozen — see [`../CLAUDE.md`](../CL
 | [implementation/v2-implementation-plan.md](implementation/v2-implementation-plan.md) | The implementation and design document, rev 2 — decides *how* |
 | [implementation/v2-implementation-plan.docx](implementation/v2-implementation-plan.docx) | The same document as Word, original and unmodified |
 
+## Corrections
+
+A living document. Where the plan and the built tree disagree, and which one is
+right. The source documents are frozen, so a factual correction is recorded
+here rather than applied to the sentence it corrects.
+
+| Document | What it is |
+|---|---|
+| [corrections.md](corrections.md) | Plan-to-tree disagreements, by section, with what the tree does and why |
+
 ## Diagrams
 
 | Document | What it is |

@@ -42,6 +42,10 @@ These are meant to be updated freely, without an ADR:
 
 - `docs/workstreams/*.md` — tick status boxes, record outcomes, note what changed
 - `docs/measurements/*.md` — fill in figures as they are taken
+- `docs/corrections.md` — where the plan and the built tree disagree. This is
+  how a factual correction reaches a reader without editing a frozen sentence:
+  record it here, against the section it belongs to. A change of *direction* is
+  still an ADR
 - `docs/README.md`, `README.md` — keep the indexes current
 
 ## Diagrams
