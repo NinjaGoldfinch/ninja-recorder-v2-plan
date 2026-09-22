@@ -6,7 +6,7 @@
 |---|---|
 | **Gated by** | — (spike); gate (build) |
 | **Rough effort** | 3 weeks spike + 4 weeks build |
-| **Status** | Not started |
+| **Status** | In progress. Every remaining task needs the Windows box |
 
 ## Goal
 
@@ -37,6 +37,38 @@ The workstream is complete when every task below has met its exit criterion as s
 - **1.6** — Full game on real hardware from a CI-built installer, isolated game audio, seekable after remux
 - **1.7** — Both backends record the same game; `windows-verification.md` gains a backend-comparison table
 - **1.8** — Quality-per-bitrate within 10% of libobs at 8 Mbps by visual comparison of the same game
+
+## Where it stands
+
+Updated 2026-09-23.
+
+**No task is closed, and the reason is the same for all of them: every one
+needs the Windows box.** What has been built off it is the scaffolding the
+gate will be answered with.
+
+- Both P0c arms exist as standalone crates, audio and video
+  ([#172](https://github.com/NinjaGoldfinch/ninja-recorder-v2/pull/172)). Neither has been run, so the gate has not been
+  answered.
+- The gate itself is written as DEVELOPMENT.md §16 on the code repository
+  ([#175](https://github.com/NinjaGoldfinch/ninja-recorder-v2/pull/175)), with the measurement table deliberately empty.
+- The libobs keep-list trim is a script, opt-in, with an inventory pass that
+  runs first ([#176](https://github.com/NinjaGoldfinch/ninja-recorder-v2/pull/176)). It has never been executed.
+- **1.7's two desk-doable halves are done** ([#184](https://github.com/NinjaGoldfinch/ninja-recorder-v2/pull/184)): the fork
+  carries an annotated `v2.0.0` tag on the revision `Cargo.lock` already held,
+  and `[bans] wildcards` is `deny` rather than `warn`. Between them those are
+  §8's definition of done for the pin. See
+  [corrections.md](../corrections.md) for why the recorded blocker, "the fork
+  has no tags", was wrong.
+
+**Two questions are settled.** [Q1a](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/67) asked whether the licence
+goal outweighs losing isolated game audio if P0c stage 1 fails. The premise
+was false: libobs reaches per-application audio through the same
+process-loopback API the spike uses, so the two goals are never opposed and
+there is no trade to make. [Q2](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/68) named the GPU vendors available
+for the encoder check. [Q3](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/69), whether the fork's maintainer has
+been approached about upstreaming, is still open and is not mine to answer.
+
+1.6 is gated on the gate, and 1.8 only exists if 1.4 flags encoder quality.
 
 ## Status
 

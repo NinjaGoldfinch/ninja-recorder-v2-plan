@@ -6,7 +6,7 @@
 |---|---|
 | **Gated by** | one release of WS7 in the field |
 | **Rough effort** | 1–2 weeks |
-| **Status** | Not started |
+| **Status** | Not started. Gated on WS1 and Q1 |
 
 ## Goal
 
@@ -37,6 +37,27 @@ The workstream is complete when every task below has met its exit criterion as s
 - **8.6** — Merged
 
 **On the target licence.** Any permissive licence (MIT, Apache-2.0, or the dual) or a source-available licence (BUSL-1.1, PolyForm) is compatible with a later closed-source distribution, because the maintainer keeps the copyright. Past releases stay under whatever they were released under; that cannot be revoked and does not need to be. If the intent is closed source *soon*, the simplest v2.1 is "all rights reserved" with the source repository made private; if the intent is to keep the repository public while reserving the option, Apache-2.0 (patent grant, contributor licence clarity) is the conventional choice. Either way, from v2.1 onward the repository should carry a `CONTRIBUTING.md` with a contributor licence agreement, or accept no outside contributions, so the copyright stays consolidated.
+
+## Where it stands
+
+Updated 2026-09-23. **Not started**, and deliberately so: it is a separate
+release, one release of WS7 in the field.
+
+Two things gate it. WS1 has to remove libobs first, and
+[Q1](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/66), the target licence, is unanswered and is not a question
+the implementation can settle.
+
+The instrument is already in place and has been since WS5. `deny.toml` denies
+every licence not on its allow list, with the GPL exceptions written as one
+deletable block: six crates in two groups, this crate and the five the fork
+resolves to. Deleting that block is what proves no copyleft dependency remains,
+so 8.3's exit criterion is mechanical rather than a judgement.
+
+One caveat for 8.4 that the plan does not name: `MPL-2.0` is on the allow list
+and stays there. Its copyleft is per file, so it obliges source for those files
+if they are modified and says nothing about the program that links them, which
+is why it survives a relicence where GPL would not. See
+[corrections.md](../corrections.md).
 
 ## Status
 

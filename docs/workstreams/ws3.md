@@ -6,7 +6,7 @@
 |---|---|
 | **Gated by** | WS2, WS6 |
 | **Rough effort** | 3 weeks |
-| **Status** | Not started |
+| **Status** | Code complete. Verified 26 of 28 rows on Windows |
 
 ## Goal
 
@@ -38,13 +38,39 @@ The workstream is complete when every task below has met its exit criterion as s
 - **3.7** — Every portal panel works against a separate daemon process
 - **3.8** — Documented in `windows-verification.md §4`
 
+## Where it stands
+
+Updated 2026-09-23. **All eight tasks are closed and the code is complete.**
+Verification is the part that is still running, because this workstream split
+one process into two and every failure mode it introduces is two processes
+disagreeing about who owns what. None of that shows up in a unit test.
+
+[#130](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/130) is the verification plan, with an order and a statement
+of what CI already rules out. As of 2026-09-22 it stands at **26 of 28 rows**.
+
+**WS3.4's exit criterion passes**: the UI killed mid-game, relaunched, showing
+the recording still in flight with its elapsed time continuing, and a complete
+VOD afterwards. That is also WS1.2's exit criterion, so it needs no separate
+run.
+
+Two rows are open:
+
+| Open | Why it still matters |
+|---|---|
+| `daemon.log` holds the finalize with no `WARN [notify]` | The notification was seen, so the absence of a warning is the only evidence the daemon took the intended path rather than a fallback |
+| The row and its markers survive a killed daemon | The change that makes this true has never been run on hardware |
+
+Two sub-issues are open beside them: [#61](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/61), `--daemon` exit code
+2 on a real release build, and [Q5](https://github.com/NinjaGoldfinch/ninja-recorder-v2/issues/71), whether `--hidden` stays an
+alias for one release or goes at 2.0.0.
+
 ## Status
 
-- [ ] **3.1** — daemon/rpc.rs: pipe listener, line framing, hello/subscribe, per-request ids,…
-- [ ] **3.2** — daemon/mod.rs: single-instance mutex, DB writer, supervisor, runtime; launch.rs --daemon…
-- [ ] **3.3** — daemon/pump.rs: tray-icon + muda menu on a Win32 message loop; Open/Settings/Quit;…
-- [ ] **3.4** — ui/: rpc_call/rpc_subscribe Tauri commands proxying the pipe; PipeTransport in TS;…
-- [ ] **3.5** — Autostart flag --hidden → --daemon; UI starts daemon if absent
-- [ ] **3.6** — Updater in daemon (reqwest + minisign-verify); UI shows status from UpdateStatus events;…
-- [ ] **3.7** — Dev portal over the pipe (dev_* join the declaration under cfg(feature = "devtools"))
-- [ ] **3.8** — Daemon killed mid-recording → UI shows "daemon not running", restarts it, resyncs;…
+- [x] **3.1** — daemon/rpc.rs: pipe listener, line framing, hello/subscribe, per-request ids,…
+- [x] **3.2** — daemon/mod.rs: single-instance mutex, DB writer, supervisor, runtime; launch.rs --daemon…
+- [x] **3.3** — daemon/pump.rs: tray-icon + muda menu on a Win32 message loop; Open/Settings/Quit;…
+- [x] **3.4** — ui/: rpc_call/rpc_subscribe Tauri commands proxying the pipe; PipeTransport in TS;…
+- [x] **3.5** — Autostart flag --hidden → --daemon; UI starts daemon if absent
+- [x] **3.6** — Updater in daemon (reqwest + minisign-verify); UI shows status from UpdateStatus events;…
+- [x] **3.7** — Dev portal over the pipe (dev_* join the declaration under cfg(feature = "devtools"))
+- [x] **3.8** — Daemon killed mid-recording → UI shows "daemon not running", restarts it, resyncs;…
