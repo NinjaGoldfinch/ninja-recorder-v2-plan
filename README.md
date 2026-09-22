@@ -29,6 +29,7 @@ tagged commit.
 | [Implementation plan](docs/implementation/v2-implementation-plan.md) | The implementation and design document, rev 2 — decides *how* |
 | [Workstreams](docs/workstreams/README.md) | WS0–WS8, one file each: goal, tasks, exit criteria, status |
 | [Decisions](docs/decisions/README.md) | ADRs 0001–0003, with the index and template |
+| [Corrections](docs/corrections.md) | Where the plan and the built tree disagree, and which one is right |
 | [Measurements](docs/measurements/README.md) | The measurement method and the v1 baseline table |
 | [Diagrams](docs/diagrams/README.md) | Eleven diagrams as Mermaid source and rendered PNG |
 | [Document index](docs/README.md) | Every document in this repository, one line each |
