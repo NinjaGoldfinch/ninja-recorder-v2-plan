@@ -13,8 +13,9 @@ v2 is eight workstreams (WS0–WS8). The table is section 1 of the [implementati
 | [WS6](ws6.md) | SQLite WAL, busy_timeout, writer + reader pool, `query_only` UI connection | — | 1 week |
 | [WS7](ws7.md) | Measure against C3 and ship v2.0.0 (Option B default, libobs selectable, still GPL-2.0) | everything | 1 week |
 | [WS8](ws8.md) | Remove libobs, audit derived code and contributors, relicense, ship v2.1.0 | one release of WS7 in the field | 1–2 weeks |
+| [WS9](ws9.md) | VOD review and note-taking. Additive, see [ADR 0004](../decisions/0004-add-ws9-vod-review.md) | P0: schema only. P1+: WS2, WS3, WS4, WS6 | Not estimated |
 
-WS0, WS1, WS2, WS5 and WS6 have no upstream and can all start in week one. WS8 is deliberately a separate release.
+WS0, WS1, WS2, WS5 and WS6 have no upstream and can all start in week one. WS8 is deliberately a separate release. WS9 is additive and outside both releases; its P0 can run beside WS1–WS3.
 
 ![Workstream dependencies](../diagrams/png/08-deps.png)
 

@@ -53,6 +53,7 @@ The design document settles the stack: keep Tauri, Rust, SQLite, files-as-truth,
 | WS6 | SQLite WAL, busy_timeout, writer + reader pool, `query_only` UI connection | — | 1 week |
 | WS7 | Measure against C3 and ship v2.0.0 (Option B default, libobs selectable, still GPL-2.0) | everything | 1 week |
 | WS8 | Remove libobs, audit derived code and contributors, relicense, ship v2.1.0 | one release of WS7 in the field | 1–2 weeks |
+| WS9 | VOD review and note-taking: review form, objectives, takeaways, blocks, spreadsheet import. Additive, see [ADR 0004](../decisions/0004-add-ws9-vod-review.md) and [WS9](../workstreams/ws9.md) | P0: schema only. P1+: WS2, WS3, WS4, WS6 | Not estimated |
 
 Total is on the order of **five months of part-time work to v2.0.0**, plus a short v2.1.0 that removes libobs and relicenses. The P0c gate (~week 4) is the only hard fork: if the process-loopback stage fails, per-application game audio is not achievable without libobs, and the licence goal has to be weighed against that product loss before continuing. Everything downstream is sequenced so that the answer changes *which backend is linked into the daemon* and nothing else.
 
@@ -771,6 +772,13 @@ gantt
 
 *Figure 11 — an indicative calendar. Durations are calendar days at part-time effort, not engineering days. The critical path runs through WS1.*
 
+**Additive workstreams.** Added under [ADR 0004](../decisions/0004-add-ws9-vod-review.md); not drawn in Figures 10 or 11, and off the critical path.
+
+| WS | Runs beside | Gated by |
+|---|---|---|
+| WS9 P0 — schema, review form, spreadsheet import | May run in parallel with the WS1–WS3 spikes | The schema only |
+| WS9 P1–P4 — notes on the player, objectives widget, blocks and retention, exports | After its upstreams, in phase order | WS2, WS3, WS4, WS6 |
+
 ### WS0 — Baseline and measurement
 
 | # | Task | Exit criterion |
@@ -942,6 +950,11 @@ So: not needed now; the LCU swagger would be welcome when WS2 starts. The Live C
 | Q4 | Is the Windows box available for roughly one session a week through WS1 and WS3? The plan assumes it | Calendar |
 | Q5 | Should the `--hidden` flag be kept as an alias for one release, or removed at 2.0.0? | 3.5 |
 | Q6 | Retire the dev portal's vanilla UI in v2, or leave it (this plan leaves it)? | 4.x scope |
+| Q7 | WS9: how is the first clear time derived? Live Client events carry no camp kills. Candidates: a hotkey at the end of the clear, the level-4 timestamp as a proxy, a gold-delta heuristic. P0 ships manual entry | WS9 P1 |
+| Q8 | WS9: does the v2 schema already persist Live Client events? *Answered:* yes, as `markers`, which WS9 reuses | WS9 P0 |
+| Q9 | WS9: what ends a block? A 2-hour gap is a guess; "same day" or manual only are the alternatives. P0 ships the 2-hour gap | WS9 P3 |
+| Q10 | WS9: are note bodies plain text with a `kind` tag, or rich text? P0 and P1 assume plain text | WS9 P1 |
+| Q11 | WS9: does the objectives widget stay visible during a match? Borderless fullscreen shows it; exclusive fullscreen will not | WS9 P2 |
 
 ---
 

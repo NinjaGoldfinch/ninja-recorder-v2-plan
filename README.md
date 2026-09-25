@@ -21,14 +21,18 @@ exits over **two releases**: v2.0.0 ships Option B with libobs selectable and st
 GPL-2.0; v2.1.0 deletes libobs, runs the audits and changes the licence in one
 tagged commit.
 
+WS9, in-app VOD review, is additive and outside both releases
+([ADR 0004](docs/decisions/0004-add-ws9-vod-review.md)).
+
 ## The documents
 
 | Document | What it is |
 |---|---|
 | [Design document](docs/design/v2-design.md) | The v2 architecture and tech-stack evaluation — decides *what* changes |
 | [Implementation plan](docs/implementation/v2-implementation-plan.md) | The implementation and design document, rev 2 — decides *how* |
-| [Workstreams](docs/workstreams/README.md) | WS0–WS8, one file each: goal, tasks, exit criteria, status |
-| [Decisions](docs/decisions/README.md) | ADRs 0001–0003, with the index and template |
+| [Workstreams](docs/workstreams/README.md) | WS0–WS9, one file each: goal, tasks, exit criteria, status |
+| [Briefs](docs/README.md#briefs) | Implementation briefs for a single phase of a workstream, under `docs/briefs/` |
+| [Decisions](docs/decisions/README.md) | ADRs 0001–0004, with the index and template |
 | [Corrections](docs/corrections.md) | Where the plan and the built tree disagree, and which one is right |
 | [Measurements](docs/measurements/README.md) | The measurement method and the v1 baseline table |
 | [Diagrams](docs/diagrams/README.md) | Eleven diagrams as Mermaid source and rendered PNG |
