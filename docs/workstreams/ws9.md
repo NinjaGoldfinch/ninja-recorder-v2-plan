@@ -6,7 +6,7 @@
 |---|---|
 | **Gated by** | P0: the schema only. P1 onward: WS2, WS3, WS4 and WS6 |
 | **Rough effort** | Not estimated |
-| **Status** | Proposed |
+| **Status** | P0 landed (2026-09-26) |
 
 The P0 implementation brief is [`../briefs/ws9-p0.md`](../briefs/ws9-p0.md).
 
@@ -238,7 +238,12 @@ These are Q7–Q11 in §9 of the plan.
 
 ## Status
 
-- [ ] **P0** — Schema, review form, objectives list, CSV import
+- [x] **P0** — Schema, review form, objectives list, CSV import. Landed on
+  `ninja-recorder` `main` as NinjaGoldfinch/ninja-recorder#266 (schema), NinjaGoldfinch/ninja-recorder#267 (`Db` methods and the
+  supervisor hooks), NinjaGoldfinch/ninja-recorder#271 (contract), NinjaGoldfinch/ninja-recorder#273 (review form and Objectives view)
+  and NinjaGoldfinch/ninja-recorder#274 (spreadsheet import); tracked in NinjaGoldfinch/ninja-recorder#262. The review form is its own
+  view in P0, and the CSV is parsed in the webview so the local timezone
+  converts its dates. Neither has been checked in a running window yet.
 - [ ] **P1** — Notes layer on the Review view
 - [ ] **P2** — Objectives view, widget, promote
 - [ ] **P3** — Block view, trends, review-driven retention, unreviewed queue
