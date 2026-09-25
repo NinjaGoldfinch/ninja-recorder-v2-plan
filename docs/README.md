@@ -39,6 +39,7 @@ here rather than applied to the sentence it corrects.
 | [decisions/0001](decisions/0001-option-b-is-the-target.md) | Option B (WGC → D3D11 → Media Foundation) is the target capture backend |
 | [decisions/0002](decisions/0002-two-release-relicensing-sequence.md) | Relicensing happens over two releases, not one |
 | [decisions/0003](decisions/0003-plan-lives-in-a-separate-repo.md) | The plan lives in a separate repository; code lands as ordinary PRs |
+| [decisions/0004](decisions/0004-add-ws9-vod-review.md) | VOD review is WS9, additive to the v2 plan |
 
 ## Workstreams
 
@@ -46,7 +47,7 @@ Living documents. Updated as the work lands on the code repository.
 
 | Document | What it is |
 |---|---|
-| [workstreams/README.md](workstreams/README.md) | WS0–WS8 summary table with links, and the working agreement |
+| [workstreams/README.md](workstreams/README.md) | WS0–WS9 summary table with links, and the working agreement |
 | [workstreams/ws0.md](workstreams/ws0.md) | Baseline and measurement |
 | [workstreams/ws1.md](workstreams/ws1.md) | Capture backend — the P0 arms and the Option B build |
 | [workstreams/ws2.md](workstreams/ws2.md) | Generated contract — commands and events declared once |
@@ -56,6 +57,17 @@ Living documents. Updated as the work lands on the code repository.
 | [workstreams/ws6.md](workstreams/ws6.md) | SQLite WAL and connection ownership |
 | [workstreams/ws7.md](workstreams/ws7.md) | Measure against C3 and ship v2.0.0 |
 | [workstreams/ws8.md](workstreams/ws8.md) | Remove libobs, audit, relicense, ship v2.1.0 |
+| [workstreams/ws9.md](workstreams/ws9.md) | VOD review and note-taking — additive, outside the v2 releases |
+
+## Briefs
+
+Implementation briefs: what one phase of a workstream builds, what it must not
+start, and what it hands back. Written ahead of the work and handed to whoever
+picks it up.
+
+| Document | What it is |
+|---|---|
+| [briefs/ws9-p0.md](briefs/ws9-p0.md) | WS9 P0 — review schema, review form, spreadsheet import |
 
 ## Measurements
 
