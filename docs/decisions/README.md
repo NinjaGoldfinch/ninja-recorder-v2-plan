@@ -10,6 +10,7 @@ that was made, the context it was made in, and what follows from it.
 | [0001](0001-option-b-is-the-target.md) | Option B (WGC → D3D11 → Media Foundation) is the target capture backend | Accepted |
 | [0002](0002-two-release-relicensing-sequence.md) | Relicensing happens over two releases, not one | Accepted |
 | [0003](0003-plan-lives-in-a-separate-repo.md) | The plan lives in a separate repository; the code lands as ordinary PRs | Accepted |
+| [0004](0004-add-ws9-vod-review.md) | VOD review is WS9, an additive workstream outside the v2.0.0 and v2.1.0 releases | Accepted |
 
 ## Rules
 
